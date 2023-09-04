@@ -20,10 +20,20 @@ export default async function Page() {
           {messages.map((item) => (
             <li
               key={item._id}
-              className="block rounded bg-white shadow px-2.5"
+              className="block px-2.5 py-4"
               style={{ width: "max-content" }}
             >
-              {item.message}
+              <div className="text-sm text-gray-600 mb-1">
+                {/* Placeholder for sender's name */}
+                {item.senderName || "Sender Name"}
+              </div>
+              <div className="rounded bg-white shadow text-base px-4 py-2">
+                {item.message}
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                {/* Placeholder for timestamp */}
+                {item.timestamp || "Timestamp"}
+              </div>
             </li>
           ))}
         </ul>
