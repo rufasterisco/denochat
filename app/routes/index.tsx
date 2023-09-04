@@ -1,12 +1,29 @@
-export default function Home() {
-  const items = ["one", "two", "three"];
+import { Handlers, PageProps } from "$fresh/server.ts";
+
+const NAMES = ["Alice", "Bob", "Charlie", "Dave", "Eve", "Frank"];
+
+interface Data {
+  results: string[];
+}
+
+export const handler: Handlers<Data> = {
+  GET(req, ctx) {
+    let results = NAMES;
+    results.push("ok");
+    return ctx.render({ results });
+  },
+};
+
+export default function Page({ data }: PageProps<Data>) {
+  const { results } = data;
   return (
-    <div class="px-4 py-8 mx-auto bg-[#86efac]">
-      <h1 class="text-4xl font-bold">We can finally chat</h1>
+    <div>
+      <form>
+        <button type="submit">Search</button>
+      </form>
       <ul>
-        {items.map((item, index) => <li key={index}>{item}</li>)}
+        {results.map((name) => <li key={name}>{name}</li>)}
       </ul>
-      <input type="text"></input>
     </div>
   );
 }
