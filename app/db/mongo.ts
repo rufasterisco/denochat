@@ -20,28 +20,28 @@ export class MongoDB {
     this.#client = new MongoClient();
   }
 
-  public async init() {
+  public async init(): Promise<void> {
     await this.#client.connect(URL);
     this.#messages = this.#client.database(DB_NAME).collection("messages");
   }
 
-  public async insertMessage(message: string) {
-    return await this.#messages.insertOne({
+  public async insertMessage(message: string): Promise<void> {
+    await this.#messages.insertOne({
       message,
     });
   }
 
-  public async findAllMessages() {
+  public async findAllMessages(): Promise<MessageSchema[]> {
     return await this.#messages.find({}).toArray();
   }
 }
 
-async function initializeDatabase() {
-  const db = new MongoDB();
+async function initializeDatabase(): Promise<MongoDB> {
+  const db: MongoDB = new MongoDB();
   await db.init();
   return db;
 }
 
 // Initialization
-const database = await initializeDatabase();
+const database: MongoDB = await initializeDatabase();
 export { database };
