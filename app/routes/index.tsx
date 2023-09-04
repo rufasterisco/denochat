@@ -8,7 +8,12 @@ export const handler: Handlers = {
     const form: FormData = await req.formData();
     const message: string | undefined = form.get("message")?.toString();
     if (message) await database.insertMessage(message);
-    return ctx.render();
+    const headers = new Headers();
+    headers.set("location", "/thanks-for-subscribing");
+    return new Response(null, {
+      status: 303,
+      headers,
+    });
   },
 };
 
