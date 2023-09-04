@@ -1,5 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { database } from "../db/mongo.ts";
+import ScrollIntoViewComponent from "../islands/ScrollIntoViewComponent.tsx";
 
 export const handler: Handlers = {
   async POST(req, ctx) {
@@ -26,6 +27,7 @@ export default async function Page() {
             </li>
           ))}
         </ul>
+        <ScrollIntoViewComponent />
       </div>
       <form
         method="POST"
