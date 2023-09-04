@@ -36,6 +36,7 @@ export default async function Page() {
           name="message"
           className="flex-1 p-2 rounded border shadow-inner"
           placeholder="Type your message"
+          autoFocus
         />
         <button
           type="submit"
