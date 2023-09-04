@@ -17,7 +17,11 @@ export default async function Page() {
       <div className="flex-1 overflow-y-auto p-4">
         <ul className="space-y-4">
           {messages.map((item) => (
-            <li key={item._id} className="p-4 rounded bg-white shadow">
+            <li
+              key={item._id}
+              className="block rounded bg-white shadow px-2.5"
+              style={{ width: "max-content" }}
+            >
               {item.message}
             </li>
           ))}
