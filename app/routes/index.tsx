@@ -1,24 +1,17 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { find, insert } from "../db/mongo.ts";
-
-// const NAMES = ["Alice", "Bob", "Charlie", "Dave", "Eve", "Frank"];
+import { database } from "../db/mongo.ts";
 
 export const handler: Handlers = {
   async POST(req, ctx) {
     const form = await req.formData();
     const message = form.get("message")?.toString();
-
-    console.log(message);
-
-    if (message) await insert(message);
+    if (message) await database.insertMessage(message);
     return ctx.render();
   },
 };
 
 export default async function Page() {
-  console.log("PAGE");
-  const messages = await find();
-  // console.debug(messages);
+  const messages = await database.findAllMessages();
   return (
     <div>
       <form method="POST">

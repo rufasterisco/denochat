@@ -1,41 +1,47 @@
 import {
+  Collection,
   MongoClient,
   ObjectId,
 } from "https://deno.land/x/mongo@v0.32.0/mod.ts";
 
-interface Message {
+interface MessageSchema {
   _id: ObjectId;
-  username: string;
-  password: string;
+  message: string;
+}
+const URL = "mongodb://root:rootpassword@localhost:27017";
+const DB_NAME = "chat";
+
+export class MongoDB {
+  #client: MongoClient;
+  // Using assertion operator, i will call the async init before exporting
+  #messages!: Collection<MessageSchema>;
+
+  constructor() {
+    this.#client = new MongoClient();
+  }
+
+  public async init() {
+    await this.#client.connect(URL);
+    this.#messages = this.#client.database(DB_NAME).collection("messages");
+  }
+
+  public async insertMessage(message: string) {
+    return await this.#messages.insertOne({
+      message,
+    });
+  }
+
+  public async findAllMessages() {
+    return await this.#messages.find({}).toArray();
+  }
 }
 
-// insert
-export async function insert(message: string) {
-  // Connection URL
-  const client = new MongoClient();
-  const url = "mongodb://root:rootpassword@localhost:27017";
-  await client.connect(url);
-
-  // Database Name
-  const dbName = "chat";
-
-  const messages = client.database(dbName).collection("messages");
-
-  return await messages.insertOne({
-    message,
-  });
+async function initializeDatabase() {
+  const db = new MongoDB();
+  await db.init();
+  return db;
 }
 
-// find
-export async function find() {
-  // Connection URL
-  const client = new MongoClient();
-  const url = "mongodb://root:rootpassword@localhost:27017";
-  await client.connect(url);
-
-  // Database Name
-  const dbName = "chat";
-
-  const messages = client.database(dbName).collection("messages");
-  return await messages.find({}).toArray();
-}
+// Initialization
+const database = await initializeDatabase();
+export { database };
