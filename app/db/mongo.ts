@@ -1,36 +1,41 @@
-import { MongoClient } from "npm:mongodb";
+import {
+  MongoClient,
+  ObjectId,
+} from "https://deno.land/x/mongo@v0.32.0/mod.ts";
+
+interface Message {
+  _id: ObjectId;
+  username: string;
+  password: string;
+}
 
 // insert
 export async function insert(message: string) {
   // Connection URL
+  const client = new MongoClient();
   const url = "mongodb://root:rootpassword@localhost:27017";
-  const client = new MongoClient(url);
+  await client.connect(url);
 
   // Database Name
   const dbName = "chat";
 
-  await client.connect();
-  const db = client.db(dbName);
-  const messages = db.collection("messages");
+  const messages = client.database(dbName).collection("messages");
 
-  const x = await messages.insertOne({
+  return await messages.insertOne({
     message,
   });
-  console.log(x);
-  return x;
 }
 
 // find
 export async function find() {
   // Connection URL
+  const client = new MongoClient();
   const url = "mongodb://root:rootpassword@localhost:27017";
-  const client = new MongoClient(url);
+  await client.connect(url);
 
   // Database Name
   const dbName = "chat";
 
-  await client.connect();
-  const db = client.db(dbName);
-  const messages = db.collection("messages");
+  const messages = client.database(dbName).collection("messages");
   return await messages.find({}).toArray();
 }
