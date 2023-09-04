@@ -34,6 +34,10 @@ export class MongoDB {
   public async findAllMessages(): Promise<MessageSchema[]> {
     return await this.#messages.find({}).toArray();
   }
+
+  public async deleteMessage() {
+    await this.#messages.delete({});
+  }
 }
 
 async function initializeDatabase(): Promise<MongoDB> {

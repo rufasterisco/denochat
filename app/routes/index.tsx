@@ -9,7 +9,7 @@ export const handler: Handlers = {
     const message: string | undefined = form.get("message")?.toString();
     if (message) await database.insertMessage(message);
     const headers = new Headers();
-    headers.set("location", "/thanks-for-subscribing");
+    headers.set("location", "/");
     return new Response(null, {
       status: 303,
       headers,
@@ -48,6 +48,14 @@ export default async function Page() {
       </div>
       <form
         method="POST"
+        action="/delete-chat"
+      >
+        <button className="fixed top-4 right-4 z-50 p-2 rounded-full bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring focus:ring-red-200">
+          Delete Chat
+        </button>
+      </form>
+      <form
+        method="POST"
         className="flex items-center p-4 bg-white border-t border-gray-200"
       >
         <input
@@ -61,7 +69,7 @@ export default async function Page() {
           type="submit"
           className="ml-4 px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
         >
-          Insert
+          Send
         </button>
       </form>
     </div>
