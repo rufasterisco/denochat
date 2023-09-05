@@ -1,5 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { database, MessageSchema } from "../db/mongo.ts";
+import HiddenInputsComponent from "../islands/HiddenNameAndColor.tsx";
 import NameGenerator from "../islands/NameGenerator.tsx";
 import ScrollIntoViewComponent from "../islands/ScrollIntoViewComponent.tsx";
 import { formatTimestampToRelativeTime } from "../utils/time.ts";
@@ -8,7 +9,8 @@ export const handler: Handlers = {
   async POST(req, ctx) {
     const form: FormData = await req.formData();
     const message: string | undefined = form.get("message")?.toString();
-    if (message) await database.insertMessage(message);
+    const name: string = form.get("name")?.toString() || "Anonymous";
+    if (message) await database.insertMessage(message, name);
     const headers = new Headers();
     headers.set("location", "/");
     return new Response(null, {
@@ -24,7 +26,6 @@ export default async function Page() {
     <div className="flex flex-col h-screen bg-[#8ecae6]">
       <div className="fixed top-0 left-0 right-0 flex items-center justify-between z-50 text-xl font-bold p-4 text-[#023047] bg-[#219ebc]">
         <NameGenerator></NameGenerator>
-        {/* Welcome Here */}
         <form method="POST" action="/delete-chat">
           <button
             className="p-2 rounded-full focus:outline-none focus:ring focus:ring-[#fb8500]"
@@ -39,14 +40,16 @@ export default async function Page() {
           {messages.map((item) => (
             <li
               key={item._id}
-              className="block px-2.5 py-4 text-[#023047]"
+              className="flex flex-col px-2.5 py-4 text-[#023047]"
               style={{ width: "max-content" }}
             >
-              <div className="text-sm mb-1 text-[#023047] font-bold">
-                Sender Name
-              </div>
-              <div className="inline-block text-base px-4 py-2 rounded-[16px] bg-white shadow text-[#023047]">
-                {item.message}
+              <div className="flex items-center mb-1">
+                <div className="text-3xl font-bold">
+                  {item.name}
+                </div>
+                <div className="inline-block ml-4 text-base px-4 py-2 rounded-[16px] bg-white shadow text-[#023047]">
+                  {item.message}
+                </div>
               </div>
               <div className="text-xs mt-1 pt-2 text-[#023047]">
                 {formatTimestampToRelativeTime(item._id.getTimestamp()) ||
@@ -69,6 +72,7 @@ export default async function Page() {
           placeholder="Type your message"
           autoFocus
         />
+        <HiddenInputsComponent></HiddenInputsComponent>
         <button
           type="submit"
           className="ml-4 px-4 py-2 rounded focus:outline-none focus:ring focus:ring-[#fb8500]"

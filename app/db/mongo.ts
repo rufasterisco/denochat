@@ -7,6 +7,7 @@ import {
 export interface MessageSchema {
   _id: ObjectId;
   message: string;
+  name: string;
 }
 const URL = "mongodb://root:rootpassword@localhost:27017";
 const DB_NAME = "chat";
@@ -25,9 +26,13 @@ export class MongoDB {
     this.#messages = this.#client.database(DB_NAME).collection("messages");
   }
 
-  public async insertMessage(message: string): Promise<void> {
+  public async insertMessage(
+    message: string,
+    name: string,
+  ): Promise<void> {
     await this.#messages.insertOne({
       message,
+      name,
     });
   }
 

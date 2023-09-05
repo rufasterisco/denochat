@@ -6,8 +6,9 @@ import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/_app.tsx";
 import * as $2 from "./routes/delete-chat.tsx";
 import * as $3 from "./routes/index.tsx";
-import * as $$0 from "./islands/NameGenerator.tsx";
-import * as $$1 from "./islands/ScrollIntoViewComponent.tsx";
+import * as $$0 from "./islands/HiddenNameAndColor.tsx";
+import * as $$1 from "./islands/NameGenerator.tsx";
+import * as $$2 from "./islands/ScrollIntoViewComponent.tsx";
 
 const manifest = {
   routes: {
@@ -17,8 +18,9 @@ const manifest = {
     "./routes/index.tsx": $3,
   },
   islands: {
-    "./islands/NameGenerator.tsx": $$0,
-    "./islands/ScrollIntoViewComponent.tsx": $$1,
+    "./islands/HiddenNameAndColor.tsx": $$0,
+    "./islands/NameGenerator.tsx": $$1,
+    "./islands/ScrollIntoViewComponent.tsx": $$2,
   },
   baseUrl: import.meta.url,
 };
