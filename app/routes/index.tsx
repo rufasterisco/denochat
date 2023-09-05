@@ -29,6 +29,8 @@ export const handler: Handlers = {
 };
 
 export default async function Page() {
+  // not an anti-pattern to load messages here instead of the handler:
+  // https://fresh.deno.dev/docs/concepts/routes
   const messages: MessageSchema[] = await database.findAllMessages();
   return (
     <div className="flex flex-col h-screen bg-[#8ecae6]">
