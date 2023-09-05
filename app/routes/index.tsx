@@ -3,7 +3,9 @@ import { database, MessageSchema } from "../db/mongo.ts";
 import HiddenInputsComponent from "../islands/HiddenNameAndColor.tsx";
 import NameGenerator from "../islands/NameGenerator.tsx";
 import ScrollIntoViewComponent from "../islands/ScrollIntoViewComponent.tsx";
+import WebsocketHandler from "../islands/WebsocketHandler.tsx";
 import { formatTimestampToRelativeTime } from "../utils/time.ts";
+import { sockets } from "../routes/ws.tsx";
 
 export const handler: Handlers = {
   async POST(req, ctx) {
