@@ -1,11 +1,11 @@
 import { Handlers } from "$fresh/server.ts";
 import { database, MessageSchema } from "../db/mongo.ts";
 import HiddenInputsComponent from "../islands/HiddenNameAndColor.tsx";
-import NameGenerator from "../islands/NameGenerator.tsx";
 import ScrollIntoViewComponent from "../islands/ScrollIntoViewComponent.tsx";
 import WebsocketHandler from "../islands/WebsocketHandler.tsx";
 import { formatTimestampToRelativeTime } from "../utils/time.ts";
 import { sockets } from "../routes/ws.tsx";
+import { Header } from "../components/Header.tsx";
 
 export const handler: Handlers = {
   async POST(req, ctx) {
@@ -34,17 +34,7 @@ export default async function Page() {
   const messages: MessageSchema[] = await database.findAllMessages();
   return (
     <div className="flex flex-col h-screen bg-[#8ecae6]">
-      <div className="fixed top-0 left-0 right-0 flex items-center justify-between z-50 text-xl font-bold p-4 text-[#023047] bg-[#219ebc]">
-        <NameGenerator></NameGenerator>
-        <form method="POST" action="/delete-chat">
-          <button
-            className="p-2 rounded-full focus:outline-none focus:ring focus:ring-[#fb8500]"
-            style={{ backgroundColor: "#bd5cbcc2", color: "#023047" }}
-          >
-            🗑️
-          </button>
-        </form>
-      </div>{" "}
+      <Header></Header>
       <div className="flex-1 overflow-y-auto p-4 mt-16 bg-opacity-50 bg-[#8ecae6]">
         <ul className="space-y-4">
           {messages.map((item) => (
