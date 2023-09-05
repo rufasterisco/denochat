@@ -11,6 +11,11 @@ export const handler: Handlers = {
     const message: string | undefined = form.get("message")?.toString();
     const name: string = form.get("name")?.toString() || "Anonymous";
     if (message) await database.insertMessage(message, name);
+
+    for (const socket of sockets) {
+      socket.send("Hello from the server!");
+    }
+
     const headers = new Headers();
     headers.set("location", "/");
     return new Response(null, {
@@ -73,6 +78,7 @@ export default async function Page() {
           autoFocus
         />
         <HiddenInputsComponent></HiddenInputsComponent>
+        <WebsocketHandler></WebsocketHandler>
         <button
           type="submit"
           className="ml-4 px-4 py-2 rounded focus:outline-none focus:ring focus:ring-[#fb8500]"
