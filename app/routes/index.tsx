@@ -1,4 +1,4 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { Handlers } from "$fresh/server.ts";
 import { database, MessageSchema } from "../db/mongo.ts";
 import HiddenInputsComponent from "../islands/HiddenNameAndColor.tsx";
 import NameGenerator from "../islands/NameGenerator.tsx";
@@ -36,9 +36,9 @@ export default async function Page() {
         <form method="POST" action="/delete-chat">
           <button
             className="p-2 rounded-full focus:outline-none focus:ring focus:ring-[#fb8500]"
-            style={{ backgroundColor: "#ffb703", color: "#023047" }}
+            style={{ backgroundColor: "#bd5cbcc2", color: "#023047" }}
           >
-            Delete Chat
+            🗑️
           </button>
         </form>
       </div>{" "}
@@ -54,7 +54,7 @@ export default async function Page() {
                 <div className="text-3xl font-bold">
                   {item.name}
                 </div>
-                <div className="inline-block ml-4 text-base px-4 py-2 rounded-[16px] bg-white shadow text-[#023047]">
+                <div className="inline-block ml-4 text-base px-4 py-2 rounded-[16px] bg-[#d8e5e0] shadow text-[#023047]">
                   {item.message}
                 </div>
               </div>
@@ -70,12 +70,12 @@ export default async function Page() {
       <form
         method="POST"
         className="flex items-center p-4 bg-[#8ecae6] border-t border-[#023047]"
+        style={{ backgroundColor: "#559e92" }}
       >
         <input
           type="text"
           name="message"
-          className="flex-1 p-2 rounded border shadow-inner text-[#023047]"
-          style={{ borderColor: "#023047" }}
+          className="flex-1 p-2 rounded border shadow-inner text-[#023047] border-[#023047]"
           placeholder="Type your message"
           autoFocus
         />
@@ -83,8 +83,8 @@ export default async function Page() {
         <WebsocketHandler></WebsocketHandler>
         <button
           type="submit"
-          className="ml-4 px-4 py-2 rounded focus:outline-none focus:ring focus:ring-[#fb8500]"
-          style={{ backgroundColor: "#90e0ef", color: "#023047" }}
+          className="ml-4 px-4 py-2 rounded focus:outline-none focus:ring focus:ring-[#fb8500] bg-[#a4b2e8]"
+          style={{ color: "#023047" }}
         >
           Send
         </button>
