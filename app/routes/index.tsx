@@ -10,9 +10,9 @@ import { sockets } from "../routes/ws.tsx";
 export const handler: Handlers = {
   async POST(req, ctx) {
     const form: FormData = await req.formData();
-    const message: string | undefined = form.get("message")?.toString();
+    const message: string = form.get("message")?.toString() || "";
     const name: string = form.get("name")?.toString() || "Anonymous";
-    if (message) await database.insertMessage(message, name);
+    if (message !== "") await database.insertMessage(message, name);
 
     for (const socket of sockets) {
       socket.send("Hello from the server!");
