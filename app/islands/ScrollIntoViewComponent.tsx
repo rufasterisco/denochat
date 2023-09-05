@@ -5,7 +5,7 @@ const ScrollIntoViewComponent = () => {
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.scrollIntoView({ behavior: "smooth" });
+      ref.current.scrollIntoView({ behavior: "instant" });
     }
   }, []);
 
