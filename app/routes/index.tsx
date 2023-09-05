@@ -57,16 +57,6 @@ export default async function Page() {
         </ul>
         <ScrollIntoViewComponent />
       </div>
-      {
-        /* <form method="POST" action="/delete-chat">
-        <button
-          className="fixed top-4 right-4 z-50 p-2 rounded-full focus:outline-none focus:ring focus:ring-[#fb8500]"
-          style={{ backgroundColor: "#ffb703", color: "#023047" }}
-        >
-          Delete Chat
-        </button>
-      </form> */
-      }
       <form
         method="POST"
         className="flex items-center p-4 bg-[#8ecae6] border-t border-[#023047]"
