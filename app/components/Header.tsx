@@ -9,7 +9,7 @@ export function Header() {
           className="p-2 rounded-full focus:outline-none focus:ring focus:ring-[#fb8500]"
           style={{ backgroundColor: "#bd5cbcc2", color: "#023047" }}
         >
-          🗑️
+          ❌
         </button>
       </form>
     </div>
