@@ -6,6 +6,7 @@ import WebsocketHandler from "../islands/WebsocketHandler.tsx";
 import { formatTimestampToRelativeTime } from "../utils/time.ts";
 import { sockets } from "../routes/ws.tsx";
 import { Header } from "../components/Header.tsx";
+import { Footer } from "../components/Footer.tsx";
 
 export const handler: Handlers = {
   async POST(req, ctx) {
@@ -60,28 +61,7 @@ export default async function Page() {
         </ul>
         <ScrollIntoViewComponent />
       </div>
-      <form
-        method="POST"
-        className="flex items-center p-4 bg-[#8ecae6] border-t border-[#023047]"
-        style={{ backgroundColor: "#559e92" }}
-      >
-        <input
-          type="text"
-          name="message"
-          className="flex-1 p-2 rounded border shadow-inner text-[#023047] border-[#023047]"
-          placeholder="Type your message"
-          autoFocus
-        />
-        <HiddenInputsComponent></HiddenInputsComponent>
-        <WebsocketHandler></WebsocketHandler>
-        <button
-          type="submit"
-          className="ml-4 px-4 py-2 rounded focus:outline-none focus:ring focus:ring-[#fb8500] bg-[#a4b2e8]"
-          style={{ color: "#023047" }}
-        >
-          Send
-        </button>
-      </form>
+      <Footer></Footer>
     </div>
   );
 }
