@@ -17,23 +17,30 @@ const isYesterday = (d1: Date, d2: Date): boolean => (
 export function formatTimestampToRelativeTime(timestamp: Date): string {
   const now = new Date();
   const timeDiffInMilliseconds = now.getTime() - timestamp.getTime();
-  const timeDiffInMinutes = Math.floor(timeDiffInMilliseconds / (MILLISECONDS_IN_A_SECOND * SECONDS_IN_A_MINUTE));
+  const timeDiffInMinutes = Math.floor(
+    timeDiffInMilliseconds / (MILLISECONDS_IN_A_SECOND * SECONDS_IN_A_MINUTE),
+  );
 
   if (timeDiffInMinutes < 1) {
-    return 'Just now';
+    return "Just now";
   }
-  
+
   if (timeDiffInMinutes < MINUTES_IN_AN_HOUR) {
     return `${timeDiffInMinutes} minutes ago`;
   }
 
-  const timeOptions: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit" };
-  const timeString = new Intl.DateTimeFormat("en-US", timeOptions).format(timestamp);
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  const timeString = new Intl.DateTimeFormat("en-US", timeOptions).format(
+    timestamp,
+  );
 
   if (isSameDay(now, timestamp)) {
     return `Today at ${timeString}`;
   }
-  
+
   if (isYesterday(timestamp, now)) {
     return `Yesterday at ${timeString}`;
   }
