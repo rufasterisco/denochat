@@ -9,13 +9,16 @@ export interface MessageSchema {
   message: string;
   name: string;
 }
-const URL = "mongodb://root:rootpassword@mongo:27017";
+// if the env var DB_HOST is set, host will be it, if not it'll be localhost
+const DB_HOST = Deno.env.get("DB_HOST") || "localhost";
+const URL = `mongodb://${DB_HOST}:27017`;
+
 const DB_NAME = "chat";
 
 export class MongoDB {
   #client: MongoClient;
   // Using assertion operator, i will call the async init before exporting
-  #messages!: Collection<MessageSchema>;
+  #messages: Collection<MessageSchema>;
 
   constructor() {
     this.#client = new MongoClient();
@@ -23,7 +26,7 @@ export class MongoDB {
 
   public async init(): Promise<void> {
     await this.#client.connect(URL);
-    this.#messages = this.#client.database(DB_NAME).collection("messages");
+    this.#messages = await this.#client.database(DB_NAME).collection("messages");
   }
 
   public async insertMessage(
