@@ -9,7 +9,7 @@ export interface MessageSchema {
   message: string;
   name: string;
 }
-const URL = "mongodb://root:rootpassword@localhost:27017";
+const URL = "mongodb://root:rootpassword@mongo:27017";
 const DB_NAME = "chat";
 
 export class MongoDB {
@@ -47,9 +47,18 @@ export class MongoDB {
 
 async function initializeDatabase(): Promise<MongoDB> {
   const db: MongoDB = new MongoDB();
-  await db.init();
-  return db;
+  
+  while (true) {
+    try {
+      await db.init();
+      return db;
+    } catch (error) {
+      console.error('Failed to initialize database. Retrying in 1 second.', error);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
 }
+
 
 // Initialization
 const database: MongoDB = await initializeDatabase();
