@@ -1,9 +1,9 @@
 import { useEffect } from "preact/hooks";
 
-function WebsocketHandler() {
+function WebsocketHandler({ ip }: { ip: string}) {
   useEffect(() => {
-    // TODO: parametrize host and port
-    const ws = new WebSocket("ws://localhost:8000/ws");
+    // TODO: parametrize port
+    const ws = new WebSocket(`ws://${ip}:8000/ws`);
 
     // Reload the page when the we receive a new message from the websocket
     ws.addEventListener("message", () => {

@@ -16,6 +16,7 @@ services:
         GIT_REVISION: ${GIT_REVISION}
     environment:
       DB_HOST: mongo
+      DENOCHAT_IP: ${DENOCHAT_IP}
     container_name: denochat
     ports:
       - "8000:8000"
