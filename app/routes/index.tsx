@@ -4,6 +4,10 @@ import { sockets } from "../routes/ws.tsx";
 import { Header } from "../components/Header.tsx";
 import { Footer } from "../components/Footer.tsx";
 import { ChatHistory } from "../components/ChatHistory.tsx";
+import { qrcode } from "https://deno.land/x/qrcode/mod.ts";
+
+// find env var named IP and assign to constant
+const DENOCHAT_IP = Deno.env.get("DENOCHAT_IP")
 
 export const handler: Handlers = {
   async POST(req, ctx) {
@@ -30,12 +34,12 @@ export const handler: Handlers = {
 };
 
 export default async function Page() {
-  // not an anti-pattern to load messages here instead of the handler:
-  // https://fresh.deno.dev/docs/concepts/routes
   const messages: MessageSchema[] = await database.findAllMessages();
+  const base64Image = await qrcode(`http://${DENOCHAT_IP}:8000`,  { size: 80 }); // data:image/gif;base64,...
+  
   return (
     <div className="flex flex-col h-screen bg-[#8ecae6]">
-      <Header></Header>
+        <Header qr={base64Image}></Header>
       <ChatHistory messages={messages} />
       <Footer></Footer>
     </div>
