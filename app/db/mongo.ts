@@ -26,7 +26,9 @@ export class MongoDB {
 
   public async init(): Promise<void> {
     await this.#client.connect(URL);
-    this.#messages = await this.#client.database(DB_NAME).collection("messages");
+    this.#messages = await this.#client.database(DB_NAME).collection(
+      "messages",
+    );
   }
 
   public async insertMessage(
@@ -50,18 +52,20 @@ export class MongoDB {
 
 async function initializeDatabase(): Promise<MongoDB> {
   const db: MongoDB = new MongoDB();
-  
+
   while (true) {
     try {
       await db.init();
       return db;
     } catch (error) {
-      console.error('Failed to initialize database. Retrying in 1 second.', error);
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.error(
+        "Failed to initialize database. Retrying in 1 second.",
+        error,
+      );
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 }
-
 
 // Initialization
 const database: MongoDB = await initializeDatabase();
