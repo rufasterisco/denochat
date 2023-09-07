@@ -1,7 +1,6 @@
 const MILLISECONDS_IN_A_SECOND = 1000;
 const SECONDS_IN_A_MINUTE = 60;
 const MINUTES_IN_AN_HOUR = 60;
-const HOURS_IN_A_DAY = 24;
 
 const isSameDay = (d1: Date, d2: Date): boolean => (
   d1.getFullYear() === d2.getFullYear() &&
