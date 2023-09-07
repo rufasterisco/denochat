@@ -35,13 +35,14 @@ export const handler: Handlers = {
 
 export default async function Page() {
   const messages: MessageSchema[] = await database.findAllMessages();
-  const base64Image = await qrcode(`http://${DENOCHAT_IP}:8000`,  { size: 80 }); // data:image/gif;base64,...
+  const qr = await qrcode(`http://${DENOCHAT_IP}:8000`,  { size: 80 })
+  const base64Image = DENOCHAT_IP ? qr : ""; // data:image/gif;base64,...
   
   return (
     <div className="flex flex-col h-screen bg-[#8ecae6]">
         <Header qr={base64Image}></Header>
       <ChatHistory messages={messages} />
-      <Footer></Footer>
+      <Footer ip={DENOCHAT_IP}></Footer>
     </div>
   );
 }
