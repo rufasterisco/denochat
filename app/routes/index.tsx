@@ -8,13 +8,14 @@ import { ChatHistory } from "../components/ChatHistory.tsx";
 export const handler: Handlers = {
   async POST(req, ctx) {
     // process incoming message, inserting into database
+    // TODO validate, sanitize
     const form: FormData = await req.formData();
     const message: string = form.get("message")?.toString() || "";
     const name: string = form.get("name")?.toString() || "Anonymous";
     if (message !== "") await database.insertMessage(message, name);
 
     // send message to all connected clients so that they update
-    for (const socket of sockets) {
+    for (const socket: Socket of sockets) {
       socket.send("Hello from the server!");
     }
 

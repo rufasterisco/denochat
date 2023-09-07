@@ -4,9 +4,6 @@ services:
   mongo:
     image: mongo:latest
     container_name: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
     ports:
       - "27017:27017"
     volumes:
@@ -17,6 +14,8 @@ services:
       context: .
       args:
         GIT_REVISION: ${GIT_REVISION}
+    environment:
+      DB_HOST: mongo
     container_name: denochat
     ports:
       - "8000:8000"
