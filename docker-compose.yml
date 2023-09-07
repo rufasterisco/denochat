@@ -3,7 +3,7 @@ version: '3'
 services:
   mongo:
     image: mongo:latest
-    container_name: my_mongo_container
+    container_name: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
@@ -11,6 +11,15 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+
+  deno:
+    build:
+      context: .
+      args:
+        GIT_REVISION: ${GIT_REVISION}
+    container_name: denochat
+    ports:
+      - "8000:8000"
 
 volumes:
   mongo_data:
