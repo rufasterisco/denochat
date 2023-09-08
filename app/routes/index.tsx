@@ -7,7 +7,7 @@ import { ChatHistory } from "../components/ChatHistory.tsx";
 import { qrcode } from "https://deno.land/x/qrcode/mod.ts";
 
 // find env var named IP and assign to constant
-const DENOCHAT_IP = Deno.env.get("DENOCHAT_IP")
+const DENOCHAT_IP = Deno.env.get("DENOCHAT_IP") || "localhost";
 
 export const handler: Handlers = {
   async POST(req, ctx) {
@@ -35,14 +35,17 @@ export const handler: Handlers = {
 
 export default async function Page() {
   const messages: MessageSchema[] = await database.findAllMessages();
-  const qr = await qrcode(`http://${DENOCHAT_IP}:8000`,  { size: 80 })
-  const base64Image = DENOCHAT_IP ? qr : ""; // data:image/gif;base64,...
+
+  let qr: string | undefined;
+  if (DENOCHAT_IP !== "localhost") {
+    qr= await qrcode(`http://${DENOCHAT_IP}:8000`,  { size: 80 })
+  } ;
   
   return (
     <div className="flex flex-col h-screen bg-[#8ecae6]">
-        <Header qr={base64Image}></Header>
+      <Header qr={qr} />
       <ChatHistory messages={messages} />
-      <Footer ip={DENOCHAT_IP}></Footer>
+      <Footer ip={DENOCHAT_IP} />
     </div>
   );
 }
