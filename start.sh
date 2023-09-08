@@ -12,7 +12,6 @@ get_linux_wifi_ip() {
       return 0
     fi
   done
-  echo "Could not find the Wi-Fi IP address."
 }
 
 # Function to get Wi-Fi IP on macOS
@@ -36,5 +35,5 @@ else
   echo "Could not find the Wi-Fi IP address."
 fi
 
-export GIT_REVISION=$(git rev-parse HEAD || echo $RANDOM)
+export GIT_REVISION=$(git rev-parse HEAD)
 docker-compose up --build
