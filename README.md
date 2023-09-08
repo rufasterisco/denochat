@@ -5,7 +5,11 @@ A real time chat built using deno fresh
 
 ## 🚀️ Install and run
 
-`./start.sh`
+Just run
+
+```./start.sh```
+
+![](assets/20230908_183206_deno720.gif)
 
 This will pull the mongo image and build the deno one.
 You might see errors in the log if the deno image builds before mongo is pulled: it is cyclically trying to connect.
