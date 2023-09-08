@@ -12,7 +12,6 @@ get_linux_wifi_ip() {
       return 0
     fi
   done
-  echo "Could not find the Wi-Fi IP address."
 }
 
 # Function to get Wi-Fi IP on macOS
@@ -36,5 +35,13 @@ else
   echo "Could not find the Wi-Fi IP address."
 fi
 
-export GIT_REVISION=$(git rev-parse HEAD || echo $RANDOM)
+# this is what i used during development
+# export GIT_REVISION=$(git rev-parse HEAD)
+
+# this is a solution that should work in both linux and macos
+# export GIT_REVISION=$(cat /dev/urandom | env LC_ALL=C tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
+#this is what i'm shipppng with, since i do not want you to run my code and find an error i coule have avoided
+export GIT_REVISION="WHATEVER"
+
 docker-compose up --build

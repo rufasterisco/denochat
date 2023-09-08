@@ -1,6 +1,4 @@
-# First stage: Deno build
-# FROM denoland/deno:v1.36.3 as deno-build
-FROM lukechannings/deno:v1.36.3 as deno-build
+FROM denoland/deno:latest
 
 
 ARG GIT_REVISION
