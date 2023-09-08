@@ -39,7 +39,7 @@ export default async function Page() {
   let qr: string | undefined;
   if (DENOCHAT_IP !== "localhost") {
     qr= await qrcode(`http://${DENOCHAT_IP}:8000`,  { size: 80 })
-  } ;
+  }
   
   return (
     <div className="flex flex-col h-screen bg-[#8ecae6]">
