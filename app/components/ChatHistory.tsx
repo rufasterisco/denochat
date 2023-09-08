@@ -4,7 +4,7 @@ import { formatTimestampToRelativeTime } from "../utils/time.ts";
 
 export function ChatHistory({ messages }: { messages: MessageSchema[] }) {
   return (
-    <div className="flex-1 overflow-y-auto p-4 mt-16 bg-opacity-50 bg-[#8ecae6]">
+    <div className="flex-1 overflow-y-auto p-4 mt-24 bg-opacity-50 bg-[#8ecae6]">
       <ul className="space-y-4">
         {messages.map((item) => (
           <li
